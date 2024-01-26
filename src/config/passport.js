@@ -13,10 +13,10 @@ const ExtractJWT = jwt.ExtractJwt //Extrae las cookies
 //Registrar usuario
 const inicializacionPassport = () => {
   const cookieExtractor = (req) => {
-    const token = req.cookies.jwtCookie ? req.cookies.jwtCookie : {}
-        // console.log('cookieExtractor', token)
-    return token
-  }
+    const token = req.headers.authorization ? req.headers.authorization : {}
+    return token;
+}
+
 
   passport.use('jwt', new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
@@ -110,5 +110,7 @@ const inicializacionPassport = () => {
     const user = await userModel.findById(id)
     done(null, user)
   })}
+  
+
 
 export default inicializacionPassport

@@ -67,6 +67,10 @@ app.use(
   })
 );
 
+//Middlewear passport
+inicializacionPassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Ruotes de Logger
 app.use(addLogger)
@@ -110,10 +114,6 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.use("/static", express.static(path.join(__dirname, "/public")));
 
-//Middlewear passport
-inicializacionPassport();
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.get("/setcookie", (req, res) => {
   res
