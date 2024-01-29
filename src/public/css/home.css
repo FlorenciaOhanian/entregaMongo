@@ -30,3 +30,12 @@ body{
 .containerItem h2 {
     margin: 0;
 }
+
+.logoutContainer {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.eliminar {
+    cursor: pointer;
+}

@@ -10,6 +10,7 @@ import { __dirname } from "./path.js";
 import path from "path";
 import { Server } from "socket.io";
 import { messageModel } from "./models/message.models.js";
+import { cartModel } from "./models/cart.models.js";
 import { userModel } from "./models/user.models.js";
 import { productoModel } from "./models/producto.models.js";
 import router from "./routes/index.routes.js";
@@ -257,7 +258,7 @@ app.get("/static/home", async (req, res) => {
     css: "home.css",
     title: "Home",
     js: "home.js",
-    login: req.session.login,
+    login: req.session.user,
   });
 });
 

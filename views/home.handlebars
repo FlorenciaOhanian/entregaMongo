@@ -1,10 +1,11 @@
 <div class="contenedorPadre">
   <div class="contenedorTitulo">
     <h1>Bienvenidos a C R U D O</h1>
+<div class='logoutContainer'>
+    {{#if login}}
+      <a href='/static/logOut'>Cerrar Sesion</a>
+    {{/if}}
   </div>
-  {{#if login}}
-  <a href="/static/logOut">Cerrar Sesion</a>
-  {{/if}}
   <h2>Carrito</h2>
   <div id="contenedorCarrito" class="contenedorCarrito">
   </div>

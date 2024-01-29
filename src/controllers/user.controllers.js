@@ -7,7 +7,7 @@ export const getUsers = async (req, res) => {
         const users = await userModel.find()
     console.log('users: ', users)
         try {
-            const users = await userModel.find()
+            const users = await userModel.find({}, 'nombre, apellido')
             res.status(200).send({ respuesta: 'OK', mensaje: users })
         } catch (error) {
             console.log(error)
@@ -54,13 +54,13 @@ export const getUsers = async (req, res) => {
 
 
     export const deleteUser =  async (req, res) => {
-        const { id } = req.params
         try {
+            const { id } = req.params
             const user = await userModel.findByIdAndDelete(id)
             if (user) {
                 res.status(200).send({ respuesta: 'OK', mensaje: user })
             } else {
-                res.status(404).send({ respuesta: 'Error en eliminar usuario', mensaje: 'User not Found' })
+                res.status(404).send({ respuesta: 'Error en eliminar usuario', mensaje: 'Usuario no encontrado' })
             }
         } catch (error) {
             res.status(400).send({ respuesta: 'Error en eliminar usuario', mensaje: error })

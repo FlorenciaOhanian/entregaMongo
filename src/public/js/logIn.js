@@ -16,7 +16,7 @@ loginForm.addEventListener('submit', async (e) => {
     })
     .then(response =>{
         console.log('RESPONSE: ', response)
-        if (response.ok)window.location.href = response.url
+        if (response.ok)window.location.href = '/static/home'
     })
     .catch(error=>{
         throw(error)
