@@ -10,7 +10,7 @@ logout.addEventListener("click", async ()=>{
         })
         .then(response =>{
             if (response.ok){
-                window.location.href = response.url
+                window.location.href = '/static/login'
             }
         })
         .catch(error=>{
