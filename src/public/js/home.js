@@ -37,7 +37,7 @@ socket.on('productosEnCarrito', (carritoViejo)=>{
       // console.log(cartItem.id_prod)
         contenedorCarrito.innerHTML += `
             <div id=${cartItem.id_prod._id} class="cartItem">
-            <p>Producto: ${cartItem.id_prod.nombre}</p>
+            <p><span>Producto: </span>${cartItem.id_prod.nombre}</p>
             <p>Cantidad: ${cartItem.cantidad}</p>
             <button id=${cartItem.id_prod._id} class='eliminar'> Eliminar del carrito </button>
             </div>

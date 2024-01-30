@@ -1,62 +1,64 @@
-body{
+body {
     margin: 0;
     padding: 0;
-    background-color: #F7F5EE;
-    font-family:  sans-serif;
+    background-color: #f7f5ee;
+    font-family: sans-serif;
 }
 .formLogin h1 {
     font-size: 24px;
 }
 
 .formLogin {
-    /* width: 100%; */
-    margin: 30px  auto;
-    padding: 10px;
-    background-color: #F1EBDD; 
+    width: fit-content;
+    margin: 20% auto;
+    padding: 30px 50px;
+    background-color: #f1ebdd;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    border-radius: 5%;
+    /* justify-content: center;
+    align-items: center; */
 }
 
-.containerEmail, .containerPassword{
-    width: 500px;
+.containerEmail,
+.containerPassword {
+    /* width: 150%; */
     margin-top: 10px;
 }
 
 label {
     display: block;
+    width: fit-content;
     margin-bottom: 5px;
-
+    font-size: large;
 }
-
 input {
-    width: 50%;
+    width: 90%;
     padding: 8px;
-    border: 2px solid #292626; 
+    border: 2px solid #292626;
     background-color: transparent;
 }
 
-
-.botonContainer{
+.botonContainer {
     width: 50%;
-    margin-top: 1rem;
-    margin-right: 14rem;
+    /* margin-top: 1rem;
+    margin-right: 14rem; */
+    margin: 1rem auto;
     display: flex;
     justify-content: center;
 }
 button {
     width: 80px;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     /* margin-top: 10px;
-    margin-left: 100px; */
-    border-radius: .3rem;
+      margin-left: 100px; */
+    border-radius: 0.3rem;
     background-color: #fff;
     color: #000;
     cursor: pointer;
 }
 
-button:hover{
+button:hover {
     background-color: #000;
-    color: #fff;
+    color:#fff;
 }
