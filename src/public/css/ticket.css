@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    background-color: #f7f5ee;
+    padding: 0 10px;
+  }
+  
+  .contenedorTicketPadre {
+    position: relative;
+    background-color: #cfc08ada;
+    width: fit-content;
+    padding: 2rem;
+    margin: 10rem auto;
+    border: 1px solid;
+    box-shadow: 8px 10px 15px black;
+  }
+  .contenedorTicket {
+    font-size: large;
+  }
+  
+  .ticketEtiqueta {
+    font-weight: bold;
+  }
+  .contenedorVolverHome {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }

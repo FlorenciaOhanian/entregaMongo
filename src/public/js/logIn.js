@@ -25,20 +25,3 @@ loginForm.addEventListener('submit', async (e) => {
     console.error(error);
 }
 })
-
-
-
-  // socket.emit('credenciales', {email : email, password: password})
-  // socket.on('usuarioValido', ()=>{
-  //   console.log('Logeando al usuario y redireccionando al Home')
-  //   loginForm.submit();
-  // })
-  // socket.on('contraseñaInvalida', ()=>{
-  //   console.log('PASSWORD INCORRECTA')
-  //   alert('PASSWORD INCORRECTA')
-
-  // })
-  // socket.on('usuarioInexistente', ()=>{
-  //   console.log('NO EXISTE USUARIO CON ESTE EMAIL')
-  //   alert('NO EXISTE USUARIO CON ESTE EMAIL')
-  // })

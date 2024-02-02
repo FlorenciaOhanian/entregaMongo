@@ -186,14 +186,13 @@ io.on("connection", (socket) => {
     const cart = await cartModel.findById(carts[0]._id);
     socket.emit("productosEnCarrito", cart.productos);
   });
-
-  socket.on("agregarAlCarrito", async (id) => {
+  socket.on('agregarAlCarrito', async (id) => {
     try {
       const producto = await productoModel.findById(id);
       const carts = await cartModel.find();
       const cart = await cartModel.findById(carts[0]._id);
       const indice = cart.productos.findIndex((prod) => prod.id_prod._id == id);
-      console.log("Indice del producto a agregar: ", indice);
+      console.log('Indice del producto a agregar: ', indice);
       if (indice != -1) {
         cart.productos[indice].cantidad = cart.productos[indice].cantidad + 1;
       } else {
@@ -203,9 +202,12 @@ io.on("connection", (socket) => {
           cantidad: 1,
         });
       }
+
       const respuesta = await cartModel.findByIdAndUpdate(carts[0]._id, cart);
-      console.log("cart: ", cart);
-      socket.emit("carritoActualizado", cart);
+      // Luego de actualizar el carrito con el producto nuevo,
+      //  vuelvo a llamar al carrito para tener el cart actualizado
+      const cartActualizado = await cartModel.findById(carts[0]._id);
+      socket.emit('carritoActualizado', cartActualizado);
     } catch (error) {
       console.log(error);
     }
@@ -252,14 +254,31 @@ app.get("/static/chat", (req, res) => {
     js: "script.js",
   });
 });
+app.get('/static/home', async (req, res) => {
+  // console.log('req.session: ', req.session.passport.user);
+  const user = await userModel.findById(req.session.passport.user);
+  const cartIdUser = user.cart.toString();
 
-app.get("/static/home", async (req, res) => {
-  res.render("home", {
-    css: "home.css",
-    title: "Home",
-    js: "home.js",
+  // console.log('user----------> ', user);
+  // console.log('USERCART: ', cartUser);
+  const cart = await cartModel.findById(cartIdUser);
+  // console.log('cart: ', cart);
+  res.render('home', {
+    css: 'home.css',
+    title: 'Home',
+    js: 'home.js',
     login: req.session.user,
+    existeProductosEnCarrito: cart.productos.length,
+    cartId: cartIdUser,
   });
+});
+
+app.get('/static/ticket', (req, res) => {
+  res.render('ticket', {
+    css: 'ticket.css',
+    title: 'Ticket page',
+    js: 'crearTicket.js',
+  });
 });
 
 app.get("/static/crearProd", (req, res) => {

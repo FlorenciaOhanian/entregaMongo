@@ -40,6 +40,39 @@ sessionRouter.post('/registro', passport.authenticate('registro'), async (req,re
   }
   })
 
+// Calcula el tiempo transcurrido desde la última conexión
+  function tiempoDesconectado(ultimaConexion) {
+      // Verifica si la última conexión es válida
+      if (!ultimaConexion) {
+          return null; 
+      }
+      // Obtengo fecha actual
+      const hoy = new Date();
+  
+      // Calcula la diferencia en milisegundos
+      const tiempoTranscurrido = hoy - new Date(ultimaConexion);
+  
+      // Convierte la diferencia a segundos
+      const segundosTranscurridos = tiempoTranscurrido / 1000;
+      return segundosTranscurridos;
+  }
+
+  function esMayorDe144Horas(lastConnection) {
+      if (!lastConnection) {
+          return false; 
+      }
+        const hoy = new Date();
+      const tiempoTranscurrido = hoy - new Date(lastConnection);
+      const horasTranscurridas = tiempoTranscurrido / (1000 * 60 * 60); // Convierto a horas
+      return horasTranscurridas > 144;
+  }
+  
+// Elimina la cuenta
+  async function eliminarCuenta(user) {
+      await userModel.findByIdAndDelete(user._id);
+      return console.log("usuario eliminado")
+  }
+
 sessionRouter.get('/github', passport.authenticate('github', {scope: ['user:email']}), async(req,res) => {
   res.status(200).send({mensaje: 'Usuario registrado'})
 })

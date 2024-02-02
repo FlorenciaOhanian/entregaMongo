@@ -1,63 +1,88 @@
 body {
-    margin: 0;
-    background-color: #f7f5ee;
-  }
-  .contenedorPadre {
-    display: flex;
-    flex-direction: column;
-  }
-  .contenedorTitulo {
-    display: flex;
-    justify-content: center;
-  }
-  .contenedorSubTitulo {
-    margin-left: 2rem;
-  }
-  .contenedorCarritoTitulo {
-    /* background-color: rgba(0, 0, 0, 0.137); */
-    background-color: #fff1bda4;
-  }
-  .contenedorCarritoTitulo h2 {
-    padding-left: 20px;
-  }
-  .contenedorCarrito {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-  }
-  .cartItem {
-    width: 25%;
-    border: 1px solid black;
-    border-radius: 2px;
-    padding: 0 20px 10px 20px;
-  }
-  .cartItem span {
-    font-weight: bold;
-  }
-  .contenedorProductos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+  margin: 0;
+  background-color: #f7f5ee;
+}
+.contenedorPadre {
+  display: flex;
+  flex-direction: column;
+}
+.contenedorTitulo {
+  display: flex;
+  justify-content: center;
+}
+.contenedorSubTitulo {
+  margin-left: 2rem;
+}
+.contenedorCarritoTitulo {
+  /* background-color: rgba(0, 0, 0, 0.137); */
+  background-color: #fff1bda4;
+}
+.contenedorCarritoTitulo h2 {
+  padding-left: 20px;
+}
+.contenedorCarrito {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+.cartItem {
+  width: 25%;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 0 20px 10px 20px;
+  background-color: #cfc08ada;
+}
+.cartItem span {
+  font-weight: bold;
+}
+
+.contenedorFinalizarCompra {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.contenedorFinalizarCompra button {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.contenedorProductos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
 }
 .containerItem {
-    border: 2px solid black;
-    width: fit-content;
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 1rem 2rem;
-    flex: 1 350px;
+  background-color: #f1ebdd;
+  border: 2px solid black;
+  width: fit-content;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 2rem;
+  flex: 1 350px;
+}
+.agregar {
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+}
+.agregar:hover {
+  background-color: #000;
+  color: #fff;
 }
 .containerItem h2 {
-    margin: 0;
+  margin: 0;
 }
 .logoutContainer {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 .eliminar {
-    cursor: pointer;
+  cursor: pointer;
 }
