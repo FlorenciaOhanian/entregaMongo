@@ -30,7 +30,7 @@ function esMayorDe144Horas(ultimaConexion) {
   }
     const hoy = new Date();
   const tiempoTranscurrido = hoy - new Date(ultimaConexion);
-  const horasTranscurridas = tiempoTranscurrido / (1000 * 60 * 60); // Convierto a horas
+  const horasTranscurridas = tiempoTranscurrido / (5 * 60 * 60); // Convierto a horas
   return horasTranscurridas > 144;
 }
 
@@ -72,6 +72,18 @@ res.status(500).send({mensaje: `Error al iniciar sesion ${error}`})
 }
 })
 
+const deleteUser = async (req, res) => {
+  if (req.session && req.session.user && esMayorDe144Horas(req.session.user.ultimaConexion)) {
+      // Eliminar la cuenta 
+      await eliminarCuenta(req.session.user);
+      req.session.destroy();
+      res.status(200).send({ resultado: 'Sesión y cuenta eliminadas debido a inactividad' });
+  } else {
+      res.status(400).send({message: "Error al eliminar usuario"})
+  }
+}
+
+
 sessionRouter.post('/registro', passport.authenticate('registro'), async (req,res) => {
   try{
     if(!req.user){
@@ -110,5 +122,7 @@ sessionRouter.get('/testJWT', passport.authenticate('jwt', {session:false}), (re
 sessionRouter.get('/current', passportError('jwt'), autorizacion('basico'), (req, res, next) =>{
   res.send(req.user.user)
 })
+
+
 
 export default sessionRouter
