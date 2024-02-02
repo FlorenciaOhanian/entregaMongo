@@ -2,12 +2,32 @@ import { Router } from "express";
 import passport from "passport";
 import {generarToken} from "../util/jwt.js"
 import {passportError, autorizacion} from "../util/messagesError.js"
+import { userModel } from "../models/user.models.js";
+
 
 const sessionRouter = Router()
 
 //Middlewares
 
-// Calcula el tiempo transcurrido desde la última conexión
+function esMayorDe144Horas(ultimaConexion) {
+  if (!ultimaConexion) {
+      return false; 
+  }
+    const hoy = new Date();
+  const tiempoTranscurrido = hoy - new Date(ultimaConexion);
+  const horasTranscurridas = tiempoTranscurrido / (5 * 60 * 60); // Convierto a horas
+  return horasTranscurridas > 0;
+}
+
+// Elimina la cuenta
+  async function eliminarCuenta(user) {
+    console.log(user)
+  await userModel.findByIdAndDelete(user._id);
+  return console.log("usuario eliminado")
+}
+sessionRouter.post('/login', passport.authenticate('login'), async (req,res) => {
+try{ 
+   // Calcula el tiempo transcurrido desde la última conexión
 function tiempoDesconectado(ultimaConexion) {
   // Verifica si la última conexión es válida
   if (!ultimaConexion) {
@@ -15,32 +35,13 @@ function tiempoDesconectado(ultimaConexion) {
   }
   // Obtengo fecha actual
   const hoy = new Date();
-
   // Calcula la diferencia en milisegundos
-  const tiempoTranscurrido = hoy - new Date(ultimaConexion);
-
+  const tiempoTranscurrido = hoy - ultimaConexion;
   // Convierte la diferencia a segundos
-  const segundosTranscurridos = tiempoTranscurrido / 1000;
-  return segundosTranscurridos;
-}
+  const minutosTranscurridos = Math.floor(tiempoTranscurrido / (1000 * 60));
 
-function esMayorDe144Horas(ultimaConexion) {
-  if (!lastConnection) {
-      return false; 
-  }
-    const hoy = new Date();
-  const tiempoTranscurrido = hoy - new Date(ultimaConexion);
-  const horasTranscurridas = tiempoTranscurrido / (5 * 60 * 60); // Convierto a horas
-  return horasTranscurridas > 144;
+  return minutosTranscurridos;
 }
-
-// Elimina la cuenta
-async function eliminarCuenta(user) {
-  await userModel.findByIdAndDelete(user._id);
-  return console.log("usuario eliminado")
-}
-sessionRouter.post('/login', passport.authenticate('login'), async (req,res) => {
-try{
   if(!req.user){
         return res.status(401).send({mensaje:`Usuario invalido`})
   }
@@ -50,17 +51,18 @@ try{
     edad: req.user.edad,
     email: req.user.email,
     rol: req.user.rol,
+    ultima_conexion: req.user.ultima_conexion,
   }
-  const ultimaConexion = req.user.ultimaConexion;
-        const tiempoDesconectado = tiempoDesconectado(ultimaConexion);
-        if (tiempoDesconectado !== null) {
-            console.log(`El usuario ha estado desconectado durante ${tiempoDesconectado} segundos.`);
+  const ultimaConexion = req.session.user.ultima_conexion;
+        const tiempoDesconectado21 = tiempoDesconectado(ultimaConexion);
+        if (tiempoDesconectado21 !== null) {
+            console.log(`El usuario ha estado desconectado durante ${tiempoDesconectado21} segundos.`);
         } else {
             console.log("La última conexión no es válida.");
         }
 
         // Actualizar ultima conexion al iniciar sesión
-        req.user.ultimaConexion = Date.now();
+        req.session.user.ultima_conexion = Date.now();
         await req.user.save();
         const token = generarToken(req.user)
         res.cookie('jwtCookie', token, {
@@ -71,18 +73,18 @@ try{
 res.status(500).send({mensaje: `Error al iniciar sesion ${error}`})
 }
 })
-
-const deleteUser = async (req, res) => {
-  if (req.session && req.session.user && esMayorDe144Horas(req.session.user.ultimaConexion)) {
-      // Eliminar la cuenta 
-      await eliminarCuenta(req.session.user);
-      req.session.destroy();
-      res.status(200).send({ resultado: 'Sesión y cuenta eliminadas debido a inactividad' });
+sessionRouter.post('/deleteUser', async (req, res) => {
+  if ( req.session && req.session.user && esMayorDe144Horas(req.session.user.ultima_conexion)
+  ) {
+    // Eliminar la cuenta
+    await eliminarCuenta(req.session.user);
+    req.session.destroy();
+    res.status(200)
+      .send({ resultado: 'Sesión y cuenta eliminadas debido a inactividad' });
   } else {
-      res.status(400).send({message: "Error al eliminar usuario"})
+    res.status(400).send({ message: 'Error al eliminar usuario' });
   }
-}
-
+});
 
 sessionRouter.post('/registro', passport.authenticate('registro'), async (req,res) => {
   try{

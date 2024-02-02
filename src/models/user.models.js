@@ -30,6 +30,10 @@ const userSchema = new Schema({
         default: 'basico',
         enum: ['basico', 'premium']
     },
+    ultima_conexion: {
+        type : Date,
+        default: Date.now
+    },
     cart : {
     type: Schema.Types.ObjectId,
     ref: 'carts'
