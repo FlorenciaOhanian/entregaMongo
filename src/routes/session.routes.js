@@ -9,7 +9,7 @@ const sessionRouter = Router()
 
 //Middlewares
 
-function esMayorDe144Horas(ultimaConexion) {
+function mayor6Horas(ultimaConexion) {
   if (!ultimaConexion) {
       return false; 
   }
@@ -74,7 +74,7 @@ res.status(500).send({mensaje: `Error al iniciar sesion ${error}`})
 }
 })
 sessionRouter.post('/deleteUser', async (req, res) => {
-  if ( req.session && req.session.user && esMayorDe144Horas(req.session.user.ultima_conexion)
+  if ( req.session && req.session.user && mayor6Horas(req.session.user.ultima_conexion)
   ) {
     // Eliminar la cuenta
     await eliminarCuenta(req.session.user);
