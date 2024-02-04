@@ -8,12 +8,12 @@ import mockFakerRouter from './mockFaker.routes.js';
 
 const router = Router()
 
-router.use("/api/users", userRouter)
-router.use("/api/productos", productoRouter);
-router.use("/api/cart", carritoRouter);
-router.use("/api/mensajes", messageRouter);
-router.use("/api/sessions", sessionRouter);
-router.use('/api/mockingproductos', mockFakerRouter)
+router.use("/users", userRouter)
+router.use("/productos", productoRouter);
+router.use("/cart", carritoRouter);
+router.use("/mensajes", messageRouter);
+router.use("/sessions", sessionRouter);
+router.use('/mockingproductos', mockFakerRouter)
 
 
 export default router

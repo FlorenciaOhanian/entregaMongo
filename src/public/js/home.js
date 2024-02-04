@@ -35,7 +35,7 @@ const eliminarDelCarrito = (e) => {
 };
 
 socket.on('productosEnCarrito', (carritoViejo) => {
-  // console.log(carritoViejo)
+  console.log("carro", carritoViejo)
   contenedorCarrito.innerHTML = '';
   carritoViejo.forEach((cartItem) => {
     // console.log(cartItem.id_prod)
@@ -50,11 +50,6 @@ socket.on('productosEnCarrito', (carritoViejo) => {
 });
 
 socket.on('carritoActualizado', (cart) => {
-  // contenedorCarrito.innerHTML =`
-  // <div class="containerCarritoProds">
-  //    El carrito posee ${cart.productos.length} productos
-  // </div>
-  // `;
   contenedorCarrito.innerHTML = '';
   cart.productos.forEach((cartItem) => {
     contenedorCarrito.innerHTML += `

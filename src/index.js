@@ -13,6 +13,7 @@ import { messageModel } from "./models/message.models.js";
 import { cartModel } from "./models/cart.models.js";
 import { userModel } from "./models/user.models.js";
 import { productoModel } from "./models/producto.models.js";
+import viewsRouter from "./routes/views.routes.js"
 import router from "./routes/index.routes.js";
 import "dotenv/config";
 import { addLogger } from "./config/logger.js";
@@ -110,7 +111,8 @@ app.get('/loggerTest', (req, res) => {
 });
 
 //Router
-app.use("/", router);
+app.use("/api", router);
+app.use('/',viewsRouter)
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.use("/static", express.static(path.join(__dirname, "/public")));
@@ -247,60 +249,3 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/static/chat", (req, res) => {
-  res.render("chat", {
-    css: "style.css",
-    title: "Chat",
-    js: "script.js",
-  });
-});
-app.get('/static/home', async (req, res) => {
-  // console.log('req.session: ', req.session.passport.user);
-  const user = await userModel.findById(req.session.passport.user);
-  const cartIdUser = user.cart.toString();
-
-  // console.log('user----------> ', user);
-  // console.log('USERCART: ', cartUser);
-  const cart = await cartModel.findById(cartIdUser);
-  // console.log('cart: ', cart);
-  res.render('home', {
-    css: 'home.css',
-    title: 'Home',
-    js: 'home.js',
-    login: req.session.user,
-    existeProductosEnCarrito: cart.productos.length,
-    cartId: cartIdUser,
-  });
-});
-
-app.get('/static/ticket', (req, res) => {
-  res.render('ticket', {
-    css: 'ticket.css',
-    title: 'Ticket page',
-    js: 'crearTicket.js',
-  });
-});
-
-app.get("/static/crearProd", (req, res) => {
-  res.render("realTimeProducts", {
-    css: "real.css",
-    title: "Form",
-    js: "realTimeProducts.js",
-  });
-});
-
-app.get("/static/login", (req, res) => {
-  res.render("session", {
-    css: "session.css",
-    title: "Session",
-    js: "logIn.js",
-  });
-});
-
-app.get("/static/logOut", (req, res) => {
-  res.render("logOut", {
-    css: "session.css",
-    title: "LogOut",
-    js: "logOut.js",
-  });
-});
