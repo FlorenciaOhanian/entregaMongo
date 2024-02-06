@@ -113,11 +113,11 @@ app.get('/loggerTest', (req, res) => {
 });
 
 //Router
-app.use('/', viewsApp);
+// app.use('/', viewsApp);
 app.use('/api', router);
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '/public')), viewsApp);
 
 // app.get('/', (req, res) => {
 //     // Ejecuta los middlewares deseados para la ruta raíz

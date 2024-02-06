@@ -11,14 +11,14 @@ viewsApp.get('/', (req, res) => {
       js: 'logIn.js',
     });
   });
-viewsApp.get('/static/chat', (req, res) => {
+viewsApp.get('/chat', (req, res) => {
   res.render('chat', {
     css: 'style.css',
     title: 'Chat',
     js: 'script.js',
   });
 });
-viewsApp.get('/static/home', async (req, res) => {
+viewsApp.get('/home', async (req, res) => {
   // console.log('req.session: ', req.session.passport.user);
   const user = await userModel.findById(req.session.passport.user);
   const cartIdUser = user.cart.toString();
@@ -42,7 +42,7 @@ viewsApp.get('/static/home', async (req, res) => {
   });
 });
 
-viewsApp.get('/static/ticket', (req, res) => {
+viewsApp.get('/ticket', (req, res) => {
   res.render('ticket', {
     css: 'ticket.css',
     title: 'Ticket page',
@@ -50,7 +50,7 @@ viewsApp.get('/static/ticket', (req, res) => {
   });
 });
 
-viewsApp.get('/static/crearProd', (req, res) => {
+viewsApp.get('/crearProd', (req, res) => {
   res.render('realTimeProducts', {
     css: 'real.css',
     title: 'Form',
@@ -60,7 +60,7 @@ viewsApp.get('/static/crearProd', (req, res) => {
 
 
 
-viewsApp.get('/static/logOut', (req, res) => {
+viewsApp.get('/logOut', (req, res) => {
   res.render('logOut', {
     css: 'session.css',
     title: 'LogOut',
