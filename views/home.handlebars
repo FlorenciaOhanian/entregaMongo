@@ -1,14 +1,14 @@
 <div class='contenedorPadre'>
   <div class='contenedorTitulo'>
     <h1>Bienvenidos a C R U D O</h1>
-
   </div>
 
   <div class='logoutContainer'>
     {{#if login}}
-      <a href='/logOut'>Cerrar Sesion</a>
+      <a href='../static/logOut'>Cerrar Sesion</a>
     {{/if}}
   </div>
+
   {{#if existeProductosEnCarrito}}
     {{! 
   Cuando se eliminan todos los productos hay que actualizar la pagina para que
@@ -21,7 +21,7 @@
       </div>
       <div>
         {{!-- <p id="mostrarMontoTotal">Monto total del carrito: {{montoTotal}}</p> --}}
-      {{!-- </div>
+      </div>
       <div class='contenedorFinalizarCompra'>
         <button id='finalizarCompra' value={{cartId}}>Finalizar compra</button>
       </div>
@@ -34,4 +34,3 @@
 
   <div id='contenedorProductos' class='contenedorProductos'>
   </div>
-</div> 
