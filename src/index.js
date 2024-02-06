@@ -117,7 +117,7 @@ app.get('/loggerTest', (req, res) => {
 app.use('/api', router);
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.use('/', express.static(path.join(__dirname, '/public')), viewsApp);
+app.use('/', express.static(path.join(__dirname, '/public')),viewsApp);
 
 // app.get('/', (req, res) => {
 //     // Ejecuta los middlewares deseados para la ruta raíz
