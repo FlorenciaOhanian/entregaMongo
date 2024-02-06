@@ -16,7 +16,7 @@ function mayor6Horas(ultimaConexion) {
     const hoy = new Date();
   const tiempoTranscurrido = hoy - new Date(ultimaConexion);
   const horasTranscurridas = tiempoTranscurrido / (5 * 60 * 60); // Convierto a horas
-  return horasTranscurridas > 0;
+  return horasTranscurridas > 1;
 }
 
 // Elimina la cuenta
