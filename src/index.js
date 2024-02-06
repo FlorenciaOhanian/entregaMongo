@@ -119,6 +119,11 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.use('/static', express.static(path.join(__dirname, '/public')));
 
+app.get('/', (req, res) => {
+  // Ejecuta los middlewares deseados para la ruta raíz
+  viewsApp(req, res); // Ejecuta viewsApp
+  router(req, res); // Ejecuta router
+});
 app.get('/setcookie', (req, res) => {
   res
     .cookie('cookieCookie', 'Mi cookie', { maxAge: 50000, signed: true })
