@@ -1,4 +1,4 @@
-<div class='contenedorPadre'>
+{{!-- <div class='contenedorPadre'>
   <div class='contenedorTitulo'>
     <h1>Bienvenidos a C R U D O</h1>
 
@@ -9,6 +9,44 @@
       <a href='/static/logOut'>Cerrar Sesion</a>
     {{/if}}
   </div>
+  {{#if existeProductosEnCarrito}}
+    {{! 
+  Cuando se eliminan todos los productos hay que actualizar la pagina para que
+  se vaya el carrito de la pantalla, lo mismo hay que actualizar cuando el carrito
+  esta vacio y se agrega un producto
+  }}
+    <div class='contenedorCarritoTitulo'>
+      <h2>Carrito</h2>
+      <div id='contenedorCarrito' class='contenedorCarrito'>
+      </div>
+      <div>
+        {{!-- <p id="mostrarMontoTotal">Monto total del carrito: {{montoTotal}}</p> --}}
+      {{!-- </div>
+      <div class='contenedorFinalizarCompra'>
+        <button id='finalizarCompra' value={{cartId}}>Finalizar compra</button>
+      </div>
+    </div>
+  {{/if}}
+
+  <div class='contenedorSubTitulo'>
+    <h2>Nuestros Productos</h2>
+  </div>
+
+  <div id='contenedorProductos' class='contenedorProductos'>
+  </div>
+</div> --}} 
+
+<div class='contenedorPadre'>
+  <div class='contenedorTitulo'>
+    <h1>Bienvenidos a C R U D O</h1>
+  </div>
+
+  <div class='logoutContainer'>
+    {{#if login}}
+      <a href='../static/logOut'>Cerrar Sesion</a>
+    {{/if}}
+  </div>
+
   {{#if existeProductosEnCarrito}}
     {{! 
   Cuando se eliminan todos los productos hay que actualizar la pagina para que
@@ -35,3 +73,7 @@
   <div id='contenedorProductos' class='contenedorProductos'>
   </div>
 </div>
+
+<!-- Modificado para usar rutas relativas -->
+<link rel="stylesheet" type="text/css" href="../css/home.css">
+<script src="../js/home.js"></script>
