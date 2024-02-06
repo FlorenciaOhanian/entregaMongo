@@ -4,7 +4,7 @@ import { userModel } from '../models/user.models.js';
 const viewsApp = Router();
 
 
-viewsApp.get('/static/login', (req, res) => {
+viewsApp.get('/', (req, res) => {
     res.render('session', {
       css: 'session.css',
       title: 'Session',
