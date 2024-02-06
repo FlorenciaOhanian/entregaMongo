@@ -3,6 +3,14 @@ import { cartModel } from '../models/cart.models.js';
 import { userModel } from '../models/user.models.js';
 const viewsApp = Router();
 
+
+viewsApp.get('/static/login', (req, res) => {
+    res.render('session', {
+      css: 'session.css',
+      title: 'Session',
+      js: 'logIn.js',
+    });
+  });
 viewsApp.get('/static/chat', (req, res) => {
   res.render('chat', {
     css: 'style.css',
@@ -50,13 +58,7 @@ viewsApp.get('/static/crearProd', (req, res) => {
   });
 });
 
-viewsApp.get('/static/login', (req, res) => {
-  res.render('session', {
-    css: 'session.css',
-    title: 'Session',
-    js: 'logIn.js',
-  });
-});
+
 
 viewsApp.get('/static/logOut', (req, res) => {
   res.render('logOut', {
