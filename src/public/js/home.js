@@ -108,5 +108,5 @@ async function handleOnclick() {
       });
   } catch (error) {
     console.error(error);
-  }
+  }
 }

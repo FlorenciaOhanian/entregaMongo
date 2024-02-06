@@ -10,12 +10,11 @@ return async (req, res, next) => {
         if(!user){
             return res.status(401).send({error: info.messages ? info.messages : info.toString()})
         }
-        req.user = user
+        req.session.user = user
         next()
     }) (req, res, next) //LLama un middleware
 }
 }
-
 //Recibo un rol y establezco la capacidad de ese usuario, lo hago dinamico
 // export const autorizacion = (rol) => {   
 //     return async (req, res, next) =>{
@@ -29,12 +28,11 @@ return async (req, res, next) => {
 //     }
 export const autorizacion = (rol) => {   
     return async (req, res, next) =>{
-        console.log("user", req.user)
-        if(!req.user) {
+        console.log("user", req.session.user)
+        if(!req.session.user) {
         return res.status(401).send({error: 'Usuario no autorizado'})//veo si el token esta activo
 }
-        if(req.user.user.rol != rol){
-            return res.status(403).send({error: 'Usuario sin permisos necesarios'})
+        if(req.session.user.rol != rol){ return res.status(403).send({error: 'Usuario sin permisos necesarios'})
         }
     next()
     }
