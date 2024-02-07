@@ -100,7 +100,7 @@ async function handleOnclick() {
         localStorage.setItem('ticket', JSON.stringify(data));
         if (responseStatus) {
           responseStatus = false;
-          window.location.href = '/static/ticket';
+          window.location.href = '/ticket';
         }
       })
       .catch((error) => {

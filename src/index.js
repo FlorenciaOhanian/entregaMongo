@@ -13,12 +13,13 @@ import { messageModel } from './models/message.models.js';
 import { cartModel } from './models/cart.models.js';
 import { userModel } from './models/user.models.js';
 import { productoModel } from './models/producto.models.js';
-import router from './routes/index.routes.js';
 import 'dotenv/config';
 import { addLogger } from './config/logger.js';
 import fs from 'fs';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUiExpress from 'swagger-ui-express';
+import router from './routes/index.routes.js';
+import viewsApp from './routes/views.routes.js';
 
 const app = express();
 const PORT = 8080;
@@ -112,15 +113,19 @@ app.get('/loggerTest', (req, res) => {
 });
 
 //Router
-app.use('/', router);
+// app.use('/', viewsApp);
+app.use('/api', router);
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '/public')),viewsApp);
 
+// app.get('/', (req, res) => {
+//     // Ejecuta los middlewares deseados para la ruta raíz
+//     viewsApp(req, res); // Ejecuta viewsApp
+//     router(req, res); // Ejecuta router
+// });
 app.get('/setcookie', (req, res) => {
-  res
-    .cookie('cookieCookie', 'Mi cookie', { maxAge: 50000, signed: true })
-    .send('Cookie Generada');
+  res.cookie('cookieCookie', 'Mi cookie', { maxAge: 50000, signed: true }).send('Cookie Generada');
 });
 app.get('/getcookie', (req, res) => {
   res.cookie('cookieCookie', 'Mi cookie').send('Cookie Modificada');
@@ -245,68 +250,5 @@ io.on('connection', (socket) => {
     } else {
       socket.emit('usuarioInexistente');
     }
-  });
-});
-
-app.get('/static/chat', (req, res) => {
-  res.render('chat', {
-    css: 'style.css',
-    title: 'Chat',
-    js: 'script.js',
-  });
-});
-app.get('/static/home', async (req, res) => {
-  // console.log('req.session: ', req.session.passport.user);
-  const user = await userModel.findById(req.session.passport.user);
-  const cartIdUser = user.cart.toString();
-
-  // console.log('user----------> ', user);
-  // console.log('USERCART: ', cartUser);
-  const carts = await cartModel.find();
-  console.log('CARTS---------------------->: ', carts);
-  const carritoID = carts[0]._id.toString();
-  const cart = await cartModel.findById(carts[0]._id);
-
-  // const cart = await cartModel.findById(cartIdUser);
-  // console.log('cart: ', cart);
-  res.render('home', {
-    css: 'home.css',
-    title: 'Home',
-    js: 'home.js',
-    login: req.session.user,
-    existeProductosEnCarrito: cart.productos.length,
-    cartId: carritoID,
-  });
-});
-
-app.get('/static/ticket', (req, res) => {
-  res.render('ticket', {
-    css: 'ticket.css',
-    title: 'Ticket page',
-    js: 'crearTicket.js',
-  });
-});
-
-app.get('/static/crearProd', (req, res) => {
-  res.render('realTimeProducts', {
-    css: 'real.css',
-    title: 'Form',
-    js: 'realTimeProducts.js',
-  });
-});
-
-app.get('/static/login', (req, res) => {
-  res.render('session', {
-    css: 'session.css',
-    title: 'Session',
-    js: 'logIn.js',
-  });
-});
-
-app.get('/static/logOut', (req, res) => {
-  res.render('logOut', {
-    css: 'session.css',
-    title: 'LogOut',
-    js: 'logOut.js',
   });
 });

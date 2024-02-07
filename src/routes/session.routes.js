@@ -69,7 +69,7 @@ sessionRouter.post(
 
       // Actualizar ultima conexion al iniciar sesión
       req.session.user.ultima_conexion = Date.now();
-      await req.user.save();
+      // await req.user.save();
       const token = generarToken(req.user);
       res.cookie('jwtCookie', token, {
         maxAge: 72000000, // 20hs

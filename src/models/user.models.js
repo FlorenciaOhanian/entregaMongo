@@ -41,14 +41,27 @@ const userSchema = new Schema({
 }) 
 
 userSchema.plugin(paginate) 
-userSchema.pre('save', async function(next){
-    try{
-        const newCart = await cartModel.create({})
-        this.cart = newCart._id
-    }catch(error){
-        next(error)
+// userSchema.pre('save', async function(next){
+//     try{
+//         const newCart = await cartModel.create({})
+//         this.cart = newCart._id
+//     }catch(error){
+//         next(error)
+//     }
+// })
+
+userSchema.pre('save', async function(next) {
+    if (!this.cart) {
+        try {
+            const newCart = await cartModel.create({});
+            this.cart = newCart._id;
+        } catch(error) {
+            // Manejar el error adecuadamente, posiblemente lanzando una excepción
+            next(error);
+        }
     }
-})
+next();
+});
 
 
 export const userModel = model('users', userSchema)

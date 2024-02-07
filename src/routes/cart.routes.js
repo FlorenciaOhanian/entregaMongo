@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { cartModel } from '../models/cart.models.js';
 import { productoModel } from '../models/producto.models.js';
-import { passportError, autorizacion } from '../util/messagesError.js';
+import { autorizacion } from '../util/messagesError.js';
 import { ticketModel } from '../models/ticket.model.js';
 
 const carritoRouter = Router();
@@ -24,7 +24,8 @@ carritoRouter.post('/', async (req, res) => {
 carritoRouter.get('/', async (req, res) => {
   try {
     const cart = await cartModel.find();
-    if (cart) res.status(200).send({ respuesta: 'OK', mensaje: cart });
+    if (cart) 
+    res.status(200).send({ respuesta: 'OK', mensaje: cart });
     else
       res.status(404).send({
         respuesta: 'Error en consultar carrito',
@@ -60,10 +61,7 @@ carritoRouter.get('/:id', async (req, res) => {
   }
 });
 
-carritoRouter.post(
-  '/:cid/productos/:pid',
-  autorizacion('basico'),
-  async (req, res) => {
+carritoRouter.post('/:cid/productos/:pid',autorizacion('basico'), async (req, res) => {
     const { cid, pid } = req.params;
     const { cantidad } = req.body;
     try {
@@ -72,7 +70,7 @@ carritoRouter.post(
         const prod = await productoModel.findById(pid);
         if (prod) {
           const indice = cart.productos.findIndex(
-            (prod) => prod.id_prod == pid
+            prod => prod.id_prod == pid
           );
           console.log(indice);
           if (indice != -1) {
@@ -109,10 +107,10 @@ carritoRouter.post(
   }
 );
 
-carritoRouter.delete('/:cid', autorizacion('user'), async (req, res) => {
+carritoRouter.delete('/:cid', autorizacion('basico'), async (req, res) => {
   const { cid } = req.params;
   try {
-    await cartModel.findByIdAndUpdate(cid, { products: [] });
+    await cartModel.findByIdAndUpdate(cid, { productos: [] });
     res.status(200).send({ respuesta: 'ok', mensaje: 'Carrito vacio' });
   } catch (error) {
     res
@@ -121,10 +119,7 @@ carritoRouter.delete('/:cid', autorizacion('user'), async (req, res) => {
   }
 });
 
-carritoRouter.delete(
-  '/:cid/productos/:pid',
-  autorizacion('basico'),
-  async (req, res) => {
+carritoRouter.delete('/:cid/productos/:pid',autorizacion('basico'), async (req, res) => {
     const { cid, pid } = req.params;
     try {
       const cart = await cartModel.findById(cid);
@@ -132,7 +127,7 @@ carritoRouter.delete(
         const prod = await productoModel.findById(pid);
         if (prod) {
           const indice = cart.productos.findIndex(
-            (item) => item.id_prod._id.toString() == pid
+            item => item.id_prod._id.toString() == pid
           );
           if (indice !== -1) {
             cart.productos.splice(indice, 1);
@@ -170,7 +165,6 @@ carritoRouter.post('/:cid/purchase', async (req, res) => {
           prooductosAEliminar.push(prod);
         }
       }
-
       if (prooductosAEliminar.length > 0) {
         //Actualizo array sin los prod a eliminar
         cart.productos = cart.productos.filter(
